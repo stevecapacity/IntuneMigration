@@ -208,7 +208,7 @@ if($diskSize -gt $neededSpace)
 	{
 		$userPath = "C:\Users\$($user)\$($location)"
 		$publicPath = "C:\Users\Public\Temp\$($location)"
-		if(!(Test-Path))
+		if(!(Test-Path $publicPath))
 		{
 			mkdir $publicPath
 		}
