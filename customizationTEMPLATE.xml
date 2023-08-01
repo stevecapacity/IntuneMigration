@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WindowsCustomizations>
+  <PackageConfig xmlns="urn:schemas-Microsoft-com:Windows-ICD-Package-Config.v1.0">
+    <ID>{$((New-Guid).Guid)}</ID>
+    <Name>Migrate</Name>
+    <Version>1.0</Version>
+    <OwnerType>ITAdmin</OwnerType>
+    <Rank>0</Rank>
+    <Notes></Notes>
+  </PackageConfig>
+  <Settings xmlns="urn:schemas-microsoft-com:windows-provisioning">
+    <Customizations>
+      <Common>
+        <Accounts>
+          <Azure>
+            <Authority>https://login.microsoftonline.com/common</Authority>
+            <BPRT>$bprt</BPRT>
+          </Azure>
+          <Users>
+            <User UserName="migration-admin">
+              <Password>**********</Password>
+              <UserGroup>Administrators</UserGroup>
+            </User>
+          </Users>
+        </Accounts>
+        <DevDetail>
+          <DNSComputerName>T2T-%SERIAL%</DNSComputerName>
+        </DevDetail>
+      </Common>
+    </Customizations>
+  </Settings>
+</WindowsCustomizations>
