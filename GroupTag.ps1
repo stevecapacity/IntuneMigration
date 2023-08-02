@@ -51,7 +51,7 @@ Write-Host "Serial number is $($serialNumber)"
 # Get graph info
 Write-Host "Getting information from Microsoft Graph.  Looking for Intune object ID..."
 
-$intuneObject = Invoke-RestMethod -Method GET -Uri "https://graph.microsoft.com/beta/deviceManagement/managedDevices?`$filter=contains(serialNumber,$($serialNumber)')" -Headers $headers
+$intuneObject = Invoke-RestMethod -Method GET -Uri "https://graph.microsoft.com/beta/deviceManagement/managedDevices?`$filter=contains(serialNumber,'$($serialNumber)')" -Headers $headers
 Write-Host "Intune object ID is $($intuneObject)"
 
 $aadDeviceId = $intuneObject.value.azureADDeviceId
