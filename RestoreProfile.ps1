@@ -25,7 +25,7 @@ if(Test-Path $dataMigrationFlag)
 	# Restore user data
 	foreach($location in $locations)
 	{
-		$userPath = "C:\User\$($currentUser)\$($location)"
+		$userPath = "C:\Users\$($currentUser)\$($location)"
 		$publicPath = "C:\Users\Public\Temp\$($location)"
 		Write-Host "Initiating data restore of $($location)"
 		robocopy $publicPath $userPath /E /ZB /R:0 /W:0 /V /XJ /FFT
