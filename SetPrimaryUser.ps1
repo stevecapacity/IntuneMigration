@@ -52,7 +52,7 @@ Write-Host "Intune Device ID is $($IntuneDeviceId)"
 $userName = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI" -name "LastLoggedOnDisplayName"
 Write-Host "Getting current user $($userName) Azure AD object ID..."
 
-$userObject = Invoke-RestMethod -Method Get -Uri "https://graph.microsoft.com/beta/users`$filter=displayName eq '$($userName)'" -Headers $headers
+$userObject = Invoke-RestMethod -Method Get -Uri "https://graph.microsoft.com/beta/users?`$filter=displayName eq '$($userName)'" -Headers $headers
 $userId = $userObject.value.id
 Write-Host "Azure AD user object ID for $($userName) is $($userId)"
 
