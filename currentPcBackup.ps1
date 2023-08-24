@@ -174,6 +174,12 @@ net user /add $shareUser $password /y
 # CREATE FILE SHARE
 $shareName = "Migrate"
 
+$Acl = Get-Acl "C:\Users\$($user)"
+$Ar = New-Object System.Security.AccessControl.FileSystemAccessRule("ShareRead", "FullControl", "ContainerInherit,ObjectInherit", "None", "Allow")
+$Acl.SetAccessRule($Ar)
+Set-Acl "C:\Users\$($user)" $Acl
+
+
 $Parameters = @{
     Name = $($shareName)
     Path = "C:\Users\$($user)"
@@ -181,14 +187,9 @@ $Parameters = @{
 }
 
 New-SmbShare @Parameters
+
 Write-Host "Created SMB share $($shareName) at path C:\Users\$($user)"
-
-$Acl = Get-Acl "\\$($hostname)\$($shareName)"
-$Ar = New-Object System.Security.AccessControl.FileSystemAccessRule("ShareRead", "FullControl", "ContainerInherit,ObjectInherit", "None", "Allow")
-$Acl.SetAccessRule($Ar)
-Set-Acl "\\$($hostname)\$($shareName)" $Acl
 Write-Host "Added account $($shareUser) to $($hostname)\$($shareName) full control permissions"
-
 
 
 # CONSTRUCT XML
