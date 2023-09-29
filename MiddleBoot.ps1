@@ -15,6 +15,20 @@ Write-Host "Current user directory name is C:\Users\$($user)"
 $currentDirectory = "C:\Users\$($user)"
 $renamedDirectory = "C:\Users\OLD_$($user)"
 
+# Delete cached WAM accounts
+$packagePath = "C:\Users\$($user)\AppData\Local\Packages"
+
+$packageFolders = Get-ChildItem -Path $packagePath
+
+foreach($package in $packageFolders)
+{
+	if($package -like "Microsoft.AAD.BrokerPlugin_*")
+	{
+		Remove-Item -Path "$($packagePath)\$($package)" -Force -Recurse
+		Write-Host "Removed $($package) from $($packagePath)"
+	}
+}
+
 if(Test-Path $currentDirectory)
 {
 	Rename-Item -Path $currentDirectory -NewName $renamedDirectory
