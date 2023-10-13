@@ -210,13 +210,15 @@ if($diskSize -gt $neededSpace)
 	foreach($location in $locations)
 	{
 		$userPath = "C:\Users\$($user)\$($location)"
+  		$aadBrokerFolder = Get-ChildItem -Path "$($userLocation)\Packages" | Where-Object {$_.Name -match "Microsoft.AAD.BrokerPlugin_*"} | Select-Object -ExpandProperty Name
+            	$aadBrokerPath = "$($userLocation)\Packages\$($aadBrokerFolder)"
 		$publicPath = "C:\Users\Public\Temp\$($location)"
 		if(!(Test-Path $publicPath))
 		{
 			mkdir $publicPath
 		}
 		Write-Host "Initiating backup of $($location)"
-		robocopy $userPath $publicPath /E /ZB /R:0 /W:0 /V /XJ /FFT
+		robocopy $userPath $publicPath /E /ZB /R:0 /W:0 /V /XJ /FFT /XD $aadBrokerPath
 	}
 	New-Item -Path $($resourcePath) -Name "MIGRATE.txt"
 }
