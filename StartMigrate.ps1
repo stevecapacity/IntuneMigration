@@ -335,7 +335,7 @@ else {
 	Write-Host "Attempting to Delete the Autopilot object..."
 	try {
 		Invoke-RestMethod -Method Delete -Uri "https://graph.microsoft.com/beta/deviceManagement/windowsAutopilotDeviceIdentities/$($autopilotID)" -Headers $headers
-		Start-Sleep -Seconds2
+		Start-Sleep -Seconds 2
 		Write-Host "Autopilot object deleted."
 	}
  catch {
