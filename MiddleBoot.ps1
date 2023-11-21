@@ -8,7 +8,7 @@ Start-Transcript -Path $postMigrationLog -Verbose
 Write-Host "Getting Tenant A user profile name"
 [xml]$memSettings = Get-Content -Path "C:\ProgramData\IntuneMigration\MEM_Settings.xml"
 $memConfig = $memSettings.Config
-$user = $memConfig.User
+$user = $memConfig.Username
 Write-Host "Current user directory name is C:\Users\$($user)"
 
 # Rename directory
