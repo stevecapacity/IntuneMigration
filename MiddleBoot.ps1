@@ -8,22 +8,31 @@ Start-Transcript -Path $postMigrationLog -Verbose
 Write-Host "Getting Tenant A user profile name"
 [xml]$memSettings = Get-Content -Path "C:\ProgramData\IntuneMigration\MEM_Settings.xml"
 $memConfig = $memSettings.Config
-$user = $memConfig.Username
+$user = $memConfig.User
 Write-Host "Current user directory name is C:\Users\$($user)"
 
 # Rename directory
 $currentDirectory = "C:\Users\$($user)"
 $renamedDirectory = "C:\Users\OLD_$($user)"
 
-if(Test-Path $currentDirectory)
+if($user -ne $null)
 {
-	Rename-Item -Path $currentDirectory -NewName $renamedDirectory
-	Write-Host "Renaming path $($currentDirectory) to $($renamedDirectory)"
+	if(Test-Path $currentDirectory)
+	{
+		Rename-Item -Path $currentDirectory -NewName $renamedDirectory
+		Write-Host "Renaming path $($currentDirectory) to $($renamedDirectory)"
+	}
+	else 
+	{
+		Write-Host "Path $($currentDirectory) not found"
+	}
 }
-else 
+else
 {
-	Write-Host "Path $($currentDirectory) not found"
+	Write-Host "User attribute not found.  Skipping directory renaming."
 }
+
+	
 
 # Disable MiddleBoot task
 Disable-ScheduledTask -TaskName "MiddleBoot"
